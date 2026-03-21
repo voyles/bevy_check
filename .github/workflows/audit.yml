@@ -19,12 +19,26 @@ jobs:
           echo "Runner OS: $RUNNER_OS"
           echo "Runner Arch: $RUNNER_ARCH"
           echo "Workspace: $GITHUB_WORKSPACE"
+          git rev-parse HEAD
           pwd
           ls -la
           rustc --version
           cargo --version
+          echo "--- engine.rs std::fs lines ---"
+          grep -n "std::fs" src/engine.rs || true
+          echo "--- main.rs std::process lines ---"
+          grep -n "std::process" src/main.rs || true
 
       - name: Run Audit
         # We combine build and run here. 
         # 'cargo run' handles the compilation automatically.
-        run: cargo run --release --locked -- --target switch --scan-source
+        run: |
+          set -euxo pipefail
+          cargo run --release --locked -- --target switch --scan-source 2>&1 | tee audit-output.log
+
+      - name: Upload Audit Output (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-output
+          path: audit-output.log
