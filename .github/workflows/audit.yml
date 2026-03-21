@@ -9,7 +9,7 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Build Auditor
-        run: cargo build --release
+        run: cargo build --release --locked
       - name: Run Audit
         # This will fail the CI if the score < 100
         run: ./target/release/bevy_check --target switch --scan-source

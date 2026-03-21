@@ -14,6 +14,12 @@ pub fn scan_source_code(src_path: &Path, report: &mut AuditReport) {
     ];
 
     for entry in WalkDir::new(src_path).into_iter().filter_map(|e| e.ok()) {
+        let path_str = entry.path().to_string_lossy();
+        // Skip the TARGET directory
+        if path_str.contains("target/") {
+            continue;
+        }
+        
         // Skip scanner.rs to avoid self-flagging
         if entry.file_name() == "scanner.rs" {
             continue;   
