@@ -4,9 +4,8 @@ use std::path::Path;
 use walkdir::WalkDir;
 
 fn has_file_ignore_tag(content: &str) -> bool {
-    content
-        .lines()
-        .any(|line| line.to_lowercase().contains("audit-ignore-file"))
+    // Searches the whole file string at once, ignoring line breaks or hidden BOM characters
+    content.to_lowercase().contains("audit-ignore-file")
 }
 
 fn has_line_ignore_tag(line: &str) -> bool {

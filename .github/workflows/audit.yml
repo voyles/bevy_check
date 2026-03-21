@@ -30,9 +30,7 @@ jobs:
           grep -n "std::process" src/main.rs || true
 
       - name: Run Audit
-        run: |
-          cargo clean
-          cargo run --release -- --target switch --scan-source
+        run: cargo clean && cargo run --release --target switch --scan-source
 
       - name: Upload Audit Output (on failure)
         if: failure()
