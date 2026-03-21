@@ -62,6 +62,28 @@ pub fn scan_source_code(src_path: &Path, report: &mut AuditReport) {
                     // (Double-check for safety)
                     if !line.to_lowercase().contains("ignore") {
                         report.portability_score = report.portability_score.saturating_sub(5);
+
+                        // Replace the bottom of your loop with this:
+                        for (pattern, reason) in &patterns {
+                            // Added 'reason' back to the loop
+                            if line.contains(pattern) {
+                                if !line.to_lowercase().contains("ignore") {
+                                    report.portability_score =
+                                        report.portability_score.saturating_sub(5);
+
+                                    // THIS IS THE PART YOU NEED:
+                                    report.violations.push(crate::models::Violation {
+                                        crate_name: "Local Source".to_string(),
+                                        severity: crate::models::Severity::Warning,
+                                        // THE TRUTH SERUM: This will print the full path in the GitHub log
+                                        message: format!("Found '{}' in {}: {}", pattern, path.display(), reason),
+                                        help: "Replace with Bevy abstractions or platform-specific CFG gates.".to_string(),
+                                        dependency_path: vec!["src".to_string(), entry.file_name().to_string_lossy().into_owned()],
+        });
+                                    break;
+                                }
+                            }
+                        }
                         // ... push violation ...
                         break;
                     }
