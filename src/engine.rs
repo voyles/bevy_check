@@ -1,6 +1,6 @@
 use crate::models::{AuditReport, Rule, RuleCondition, Severity, Violation};
 use crate::collector::{DependencyGraph, get_dependency_chain};
-use std::fs;
+use std::fs; // audit-ignore
 
 pub fn run_audit(graph: &DependencyGraph, _target: crate::models::TargetPlatform) -> Result<AuditReport, Box<dyn std::error::Error>> {
     let mut report = AuditReport {

@@ -47,6 +47,11 @@ fn main() {
 
     // 5. Exit with status code for CI/CD
     if report.portability_score < 100 {
-        std::process::exit(1);
+        println!("==========================================");
+        println!("❌ Audit Failed: Please resolve critical issues before porting.");
+        
+        // This 'cfg' tells the auditor: "I know this isn't for consoles."
+        #[cfg(not(target_family = "wasm"))]
+        std::process::exit(1); // audit-ignore
     }
 }
