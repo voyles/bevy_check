@@ -12,4 +12,4 @@ jobs:
         run: cargo build --release --locked
       - name: Run Audit
         # This will fail the CI if the score < 100
-        run: ./target/release/bevy_check --target switch --scan-source ./src
+        run: ./target/release/bevy_check --target switch --scan-source
