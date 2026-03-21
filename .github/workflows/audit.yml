@@ -6,10 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
-      - name: Build Auditor
-        run: cargo build --release --locked
+
       - name: Run Audit
-        # This will fail the CI if the score < 100
-        run: ./target/release/bevy_check --target switch --scan-source
+        # We combine build and run here. 
+        # 'cargo run' handles the compilation automatically.
+        run: cargo run --release --locked -- --target switch --scan-source
