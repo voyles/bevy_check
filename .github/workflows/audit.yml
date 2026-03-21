@@ -1,0 +1,15 @@
+name: Bevy Console Audit
+on: [push, pull_request]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Build Auditor
+        run: cargo build --release
+      - name: Run Audit
+        # This will fail the CI if the score < 100
+        run: ./target/release/bevy_check --target switch --scan-source

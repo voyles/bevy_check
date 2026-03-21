@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "rules": [
+    {
+      "crate_id": "cpal",
+      "severity": "Critical",
+      "condition": "always",
+      "reason": "Directly interacts with ALSA/DirectSound. Consoles require proprietary audio drivers.",
+      "remediation": "Use `bevy_kira_audio` with a platform-specific backend."
+    },
+    {
+      "crate_id": "tokio",
+      "severity": "Warning",
+      "condition": "feature_enabled",
+      "feature": "rt-multi-thread",
+      "reason": "Multi-threaded runtimes can exceed thread-count limits on older console cores.",
+      "remediation": "Use the single-threaded scheduler or Bevy's built-in TaskPool."
+    },
+    {
+      "crate_id": "reqwest",
+      "severity": "Critical",
+      "condition": "feature_enabled",
+      "feature": "native-tls",
+      "reason": "Links to system OpenSSL/Schannel, which are absent or restricted on consoles.",
+      "remediation": "Enable the `rustls` feature instead."
+    },
+    {
+      "crate_id": "winit",
+      "severity": "Warning",
+      "condition": "always",
+      "reason": "Bevy 0.18 relies on winit, but consoles use bespoke windowing. Ensure you have a platform-specific abstraction layer.",
+      "remediation": "Verify your Bevy version supports the target console's RawWindowHandle."
+    }
+  ]
+}
