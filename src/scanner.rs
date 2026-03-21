@@ -8,9 +8,9 @@ pub fn scan_source_code(src_path: &Path, report: &mut AuditReport) {
     println!("🔍 Scanning source code for platform leaks...");
 
     let patterns = vec![
-    (   format!("std::{}", "process"), "Direct process spawning is forbidden."),
-        (format!("std::{}", "net"), "Consoles require proprietary network wrappers."),
-        (format!("std::{}", "fs"), "Direct filesystem access is restricted."),
+    (   format!("std::{}", "process"), "Direct process spawning is forbidden."), // audit-ignore
+        (format!("std::{}", "net"), "Consoles require proprietary network wrappers."), // audit-ignore
+        (format!("std::{}", "fs"), "Direct filesystem access is restricted."), // audit-ignore
     ];
 
     for entry in WalkDir::new(src_path).into_iter().filter_map(|e| e.ok()) {

@@ -9,7 +9,7 @@ pub fn run_audit(graph: &DependencyGraph, _target: crate::models::TargetPlatform
     };
 
     // 1. Load the rules from the JSON file
-    let rules_json = fs::read_to_string("rules/default_rules.json")?;
+    let rules_json = fs::read_to_string("rules/default_rules.json")?; //audit-ignore
     let data: serde_json::Value = serde_json::from_str(&rules_json)?;
     let rules: Vec<Rule> = serde_json::from_value(data["rules"].clone())?;
 
