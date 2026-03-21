@@ -1,5 +1,8 @@
 name: Bevy Console Audit
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   audit:
@@ -9,6 +12,17 @@ jobs:
       
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
+
+      - name: Debug Environment (temporary)
+        run: |
+          set -euxo pipefail
+          echo "Runner OS: $RUNNER_OS"
+          echo "Runner Arch: $RUNNER_ARCH"
+          echo "Workspace: $GITHUB_WORKSPACE"
+          pwd
+          ls -la
+          rustc --version
+          cargo --version
 
       - name: Run Audit
         # We combine build and run here. 
