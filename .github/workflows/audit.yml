@@ -32,9 +32,7 @@ jobs:
       - name: Run Audit
         # We combine build and run here. 
         # 'cargo run' handles the compilation automatically.
-        run: |
-          set -euxo pipefail
-          cargo run --release --locked -- --target switch --scan-source 2>&1 | tee audit-output.log
+        run: cargo run --release --target switch --scan-source
 
       - name: Upload Audit Output (on failure)
         if: failure()
