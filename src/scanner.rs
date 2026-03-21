@@ -33,7 +33,6 @@ pub fn scan_source_code(src_path: &Path, report: &mut AuditReport) {
             
             for line_result in reader.lines() {
                 let raw_line = line_result.unwrap_or_default();
-
                 let line = raw_line.trim(); // Remove leading/trailing whitespace
 
                 // Skip scanning this line if the developer vetted it
@@ -43,7 +42,7 @@ pub fn scan_source_code(src_path: &Path, report: &mut AuditReport) {
 
                 for (pattern, reason) in &patterns {
                     if line.contains(pattern) {
-                        if report.portability_score > 5 {
+                        if report.portability_score >= 5 {
                             report.portability_score -= 5;
                         }
 
@@ -54,6 +53,9 @@ pub fn scan_source_code(src_path: &Path, report: &mut AuditReport) {
                             help: "Replace with Bevy abstractions or platform-specific CFG gates.".to_string(),
                             dependency_path: vec!["src".to_string(), entry.file_name().to_string_lossy().into_owned()],
                         });
+
+                        // EXIT the pattern loop for this line so we don't double-penalize
+                        break;
                     }
                 }
             }
