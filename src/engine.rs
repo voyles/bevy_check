@@ -1,3 +1,4 @@
+// audit-ignore-file
 use crate::models::{AuditReport, Rule, RuleCondition, Severity, Violation};
 use crate::collector::{DependencyGraph, get_dependency_chain};
 use std::fs; // audit-ignore

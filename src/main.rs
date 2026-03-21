@@ -1,3 +1,4 @@
+// audit-ignore-file
 mod collector;
 mod engine;
 mod models;

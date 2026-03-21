@@ -13,6 +13,7 @@ fn has_line_ignore_tag(line: &str) -> bool {
     line.to_lowercase().contains("audit-ignore")
 }
 
+
 pub fn scan_source_code(src_path: &Path, report: &mut AuditReport) {
     println!("🔍 Scanning source code for platform leaks...");
 
