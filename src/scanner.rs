@@ -31,10 +31,12 @@ pub fn scan_source_code(src_path: &Path, report: &mut AuditReport) {
             let reader = BufReader::new(file);
             
             for line_result in reader.lines() {
-                let line = line_result.unwrap_or_default();
+                let raw_line = line_result.unwrap_or_default();
+
+                let line = raw_line.trim(); // Remove leading/trailing whitespace
 
                 // Skip scanning this line if the developer vetted it
-                if line.contains("audit-ignore") {
+                if line.is_empty() ||line.contains("audit-ignore") {
                     continue;
                 }
 
