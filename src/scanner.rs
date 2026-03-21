@@ -43,19 +43,28 @@ pub fn scan_source_code(src_path: &Path, report: &mut AuditReport) {
             let raw_line = line_result.unwrap_or_default();
             let line = raw_line.trim();
 
-            // 2. THE NUCLEAR IGNORE: If 'ignore' is anywhere, KILL THE LINE
-            if line.is_empty() || line.to_lowercase().contains("ignore") {
+            // 1. If the line contains the comment characters '//',
+            // we check if 'ignore' exists anywhere after them.
+            if let Some(comment_pos) = line.find("//") {
+                if line[comment_pos..].to_lowercase().contains("ignore") {
+                    continue;
+                }
+            }
+
+            // 2. Standard empty line check
+            if line.is_empty() {
                 continue;
             }
 
             for (pattern, _) in &patterns {
                 if line.contains(pattern) {
-                    // REDUCE SCORE AND LOG
-                    report.portability_score = report.portability_score.saturating_sub(5);
-
-                    // ... push violation ...
-
-                    break; // Stop looking at this line
+                    // Check one more time: does this specific match have an ignore on the same line?
+                    // (Double-check for safety)
+                    if !line.to_lowercase().contains("ignore") {
+                        report.portability_score = report.portability_score.saturating_sub(5);
+                        // ... push violation ...
+                        break;
+                    }
                 }
             }
         }
