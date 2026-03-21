@@ -9,7 +9,7 @@ fn has_file_ignore_tag(content: &str) -> bool {
 }
 
 fn has_line_ignore_tag(line: &str) -> bool {
-    line.to_lowercase().contains("audit-ignore")
+    line.to_lowercase().contains("ignore-file")
 }
 
 
