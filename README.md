@@ -9,7 +9,7 @@
    cargo build --release
 
 2. **Audit your project:**
-    Point it at any Bevy porject's Cargo.toml:
+    Point it at any Bevy project's Cargo.toml:
     ./target/release/bevy_check --manifest-path ../my_game/Cargo.toml --target switch --scan-source
 
 3. **Command-Line Flags**
@@ -43,11 +43,11 @@
 ## 📋 Adding Rules
 
 **Customize the database in rules/default_rules.json**
-    {
-      "crate_id": "crate_name",
-      "severity": "Critical | Warning | Info",
-      "condition": "always | feature_enabled",
-      "feature": "feature_name",
-      "reason": "Why this fails console certification.",
-      "remediation": "How to fix it."
-    }
+    {  
+      "crate_id": "crate_name",  
+      "severity": "Critical | Warning | Info",  
+      "condition": "always | feature_enabled",  
+      "feature": "feature_name",  
+      "reason": "Why this fails console certification.",  
+      "remediation": "How to fix it."  
+    }  
