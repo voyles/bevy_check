@@ -42,12 +42,12 @@
 
 ## 📋 Adding Rules
 
-**Customize the database in rules/default_rules.json**
+**Customize the database in rules/default_rules.json**  
     {  
-      "crate_id": "crate_name",  
-      "severity": "Critical | Warning | Info",  
-      "condition": "always | feature_enabled",  
-      "feature": "feature_name",  
-      "reason": "Why this fails console certification.",  
-      "remediation": "How to fix it."  
+    &nbsp;&nbsp;&nbsp;&nbsp;"crate_id": "crate_name",  
+    &nbsp;&nbsp;&nbsp;&nbsp;"severity": "Critical | Warning | Info",  
+    &nbsp;&nbsp;&nbsp;&nbsp;"condition": "always | feature_enabled",  
+    &nbsp;&nbsp;&nbsp;&nbsp;"feature": "feature_name",  
+    &nbsp;&nbsp;&nbsp;&nbsp;"reason": "Why this fails console certification.",  
+    &nbsp;&nbsp;&nbsp;&nbsp;"remediation": "How to fix it."  
     }  
